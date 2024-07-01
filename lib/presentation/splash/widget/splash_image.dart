@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:roamio/responsive/font_size_scaler.dart';
+import 'package:roamio/responsive/hight_width_scaler.dart';
 
 class SplashImageAnimation extends StatelessWidget {
   const SplashImageAnimation({
@@ -14,6 +16,12 @@ class SplashImageAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HightWidthScaler scaler = HightWidthScaler();
+    scaler.init(context);
+
+    double scaledFontSize(double baseFontSize) =>
+        FontSizeScaler.calculateFontSize(context, baseFontSize);
+
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Column(
@@ -21,33 +29,33 @@ class SplashImageAnimation extends StatelessWidget {
         children: [
           LottieBuilder.asset(
             'assets/lottie/plane.json',
-            height: 170,
-            width: 170,
+            height: scaler.scaleHeight(170),
+            width: scaler.scaleWidth(170), 
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: scaler.scaleHeight(10), 
           ),
           SlideTransition(
             position: _slideAnimation,
-            child: const Text(
+            child: Text(
               'Roamio',
               style: TextStyle(
-                fontSize: 28,
+                fontSize: scaledFontSize(28), 
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
               ),
             ),
           ),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: scaler.scaleHeight(30), 
           ),
           SlideTransition(
             position: _slideAnimation,
-            child: const Text(
+            child: Text(
               'Created by Sophia',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16,
+                fontSize: scaledFontSize(16),
               ),
             ),
           ),

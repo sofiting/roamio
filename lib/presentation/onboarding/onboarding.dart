@@ -51,13 +51,18 @@ class _OnboardingState extends State<Onboarding>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: OnboardingMainStack(
-          pageViewController: pageViewController,
-          currentPage: currentPage,
-          endReached: endReached,
-          animationController: _animationController),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: OnboardingMainStack(
+            pageViewController: pageViewController,
+            currentPage: currentPage,
+            endReached: endReached,
+            animationController: _animationController,
+          ),
+        );
+      },
     );
   }
 }

@@ -22,21 +22,32 @@ class SildeMainColumn extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        LottieBuilder.asset(imageUrl),
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: 1, 
+            child: LottieBuilder.asset(imageUrl),
+          ),
+        ),
         const SizedBox(height: 20),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: titleSize,
-            fontWeight: FontWeight.bold,
+        Flexible(
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: titleSize,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         const SizedBox(height: 10),
-        Text(
-          caption,
-          style: TextStyle(
-            fontSize: captionSize,
-            color: Colors.grey[700],
+        Flexible(
+          child: Text(
+            caption,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: captionSize,
+              color: Colors.grey[700],
+            ),
           ),
         ),
       ],

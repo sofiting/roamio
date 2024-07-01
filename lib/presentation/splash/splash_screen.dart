@@ -48,8 +48,8 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         if (!kIsWeb) {
           context.go('/onboarding_screen');
-        } else {
-          context.go('/introduction');
+        }else{
+            context.go('/introduction');
         }
       }
     });

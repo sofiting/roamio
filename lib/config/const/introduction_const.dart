@@ -1,9 +1,9 @@
 List<String> introTitle = [
   'Roamio',
   'Reach New Heights',
-  'See the World, Frame by Frame',
+  'Frame Your World',
   'The Sky\'s the Limit',
-  'Feel the Breeze, Hear the Waves'
+  'Breeze and Waves'
 ];
 List<String> introContent = [
   'Explore. Discover. Roam with Roamio.',

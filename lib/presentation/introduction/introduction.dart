@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:roamio/config/const/app_const.dart';
 import 'package:roamio/config/const/introduction_const.dart';
+import 'package:roamio/responsive/font_size_scaler.dart';
+import 'package:roamio/responsive/hight_width_scaler.dart';
 
 class Introduction extends StatefulWidget {
   const Introduction({super.key});
@@ -30,7 +32,12 @@ class _IntroductionState extends State<Introduction> {
 
   @override
   Widget build(BuildContext context) {
+    HightWidthScaler scaler = HightWidthScaler();
+    scaler.init(context);
+    double scaledFontSize(double baseFontSize) =>
+        FontSizeScaler.calculateFontSize(context, baseFontSize);
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: ListView.builder(
         controller: scrollController,
@@ -73,15 +80,12 @@ class _IntroductionState extends State<Introduction> {
                           ? CrossAxisAlignment.start
                           : CrossAxisAlignment.end,
                       children: [
-                        FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            introTitle[index],
-                            style: TextStyle(
-                              color: introTextColor,
-                              fontSize: 90,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        Text(
+                          introTitle[index],
+                          style: TextStyle(
+                            color: introTextColor,
+                            fontSize: scaledFontSize(42),
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -94,7 +98,7 @@ class _IntroductionState extends State<Introduction> {
                                 : TextAlign.right,
                             style: TextStyle(
                               color: introTextColor,
-                              fontSize: 50,
+                              fontSize: scaledFontSize(18),
                             ),
                           ),
                         ),
@@ -106,12 +110,12 @@ class _IntroductionState extends State<Introduction> {
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton.icon(
                               onPressed: () {},
-                              label: const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              label: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   'Explore',
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: scaledFontSize(16),
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
