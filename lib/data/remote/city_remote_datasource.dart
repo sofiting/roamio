@@ -3,19 +3,22 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 import 'package:roamio/core/model/city.dart';
 
 class CityRemoteDatasource {
   final Dio _dio;
 
   CityRemoteDatasource({required Dio dio}) : _dio = dio {
-    // ignore: deprecated_member_use
-    (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-        (HttpClient client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return client;
-    };
+    if (!kIsWeb) {
+      // ignore: deprecated_member_use
+      (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+          (HttpClient client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        return client;
+      };
+    }
   }
 
   Future<List<City>> fetchCities() async {

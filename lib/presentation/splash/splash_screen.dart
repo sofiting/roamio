@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +46,11 @@ class _SplashScreenState extends State<SplashScreen>
 
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
-        context.go('/onboarding_screen');
+        if (!kIsWeb) {
+          context.go('/onboarding_screen');
+        } else {
+          context.go('/introduction');
+        }
       }
     });
   }

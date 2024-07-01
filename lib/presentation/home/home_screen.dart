@@ -10,7 +10,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(cityViewModelProvider);
 
-    return Scaffold(
+     return Scaffold(
       appBar: AppBar(
         title: const Text('Cities'),
       ),

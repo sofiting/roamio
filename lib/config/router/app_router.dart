@@ -15,6 +15,11 @@ final appRouter = GoRouter(
       builder: (context, state) => const Onboarding(),
     ),
     GoRoute(
+      path: '/introduction',
+      name: Introduction.name,
+      builder: (context, state) => const Introduction(),
+    ),
+    GoRoute(
       path: '/home_screen',
       name: HomeScreen.name,
       builder: (context, state) => const HomeScreen(),
