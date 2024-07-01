@@ -1,13 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'hotel.g.dart';
-@JsonSerializable()
 class Hotel {
-  int id;
-  String name;
-  List<String> images;
-  double price;
-  double recommendationStar;
-  String description;
+  final int id;
+  final String name;
+  final List<String> images;
+  final double price;
+  final double recommendationStar;
+  final String description;
 
   Hotel({
     required this.id,
@@ -18,7 +15,36 @@ class Hotel {
     required this.description,
   });
 
-  factory Hotel.fromJson(Map<String, dynamic> json) => _$HotelFromJson(json);
+  factory Hotel.fromJson(Map<String, dynamic> json) {
+    try {
+      var imagesList = json['images'] as List;
+      List<String> images = imagesList.cast<String>();
 
-  Map<String, dynamic> toJson() => _$HotelToJson(this);
+      for (var element in images) {
+        if (element.runtimeType != String) {
+          throw Exception('All elements in images should be of type String');
+        }
+      }
+
+      return Hotel(
+        id: json['id'],
+        name: json['name'],
+        images: images,
+        price: json['price'].toDouble(),
+        recommendationStar: json['recommendationStar'].toDouble(),
+        description: json['description'],
+      );
+    } catch (e) {
+      throw Exception('Error parsing Hotel from JSON: $e');
+    }
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'images': images,
+        'price': price,
+        'recommendationStar': recommendationStar,
+        'description': description,
+      };
 }

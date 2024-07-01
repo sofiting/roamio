@@ -1,14 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
-part 'air_plane_company.g.dart';
-
-@JsonSerializable()
 class AirplaneCompany {
-  int id;
-  String name;
-  String image;
-  double price;
-  double recommendationStar;
-  String description;
+  final int id;
+  final String name;
+  final String image;
+  final double price;
+  final double recommendationStar;
+  final String description;
 
   AirplaneCompany({
     required this.id,
@@ -19,8 +15,23 @@ class AirplaneCompany {
     required this.description,
   });
 
-  factory AirplaneCompany.fromJson(Map<String, dynamic> json) =>
-      _$AirplaneCompanyFromJson(json);
+  factory AirplaneCompany.fromJson(Map<String, dynamic> json) {
+    return AirplaneCompany(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      price: json['price'].toDouble(),
+      recommendationStar: json['recommendationStar'].toDouble(),
+      description: json['description'],
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$AirplaneCompanyToJson(this);
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'image': image,
+        'price': price,
+        'recommendationStar': recommendationStar,
+        'description': description,
+      };
 }

@@ -1,18 +1,15 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:roamio/core/model/air_plane_company.dart';
 import 'package:roamio/core/model/hotel.dart';
 import 'package:roamio/core/model/restaurant.dart';
 
-part 'city.g.dart';
-@JsonSerializable()
 class City {
-  int id;
-  String name;
-  String image;
-  String description;
-  List<AirplaneCompany> airplaneCompanies;
-  List<Hotel> hotels;
-  List<Restaurant> restaurants;
+  final int id;
+  final String name;
+  final String image;
+  final String description;
+  final List<AirplaneCompany> airplaneCompanies;
+  final List<Hotel> hotels;
+  final List<Restaurant> restaurants;
 
   City({
     required this.id,
@@ -24,7 +21,49 @@ class City {
     required this.restaurants,
   });
 
-  factory City.fromJson(Map<String, dynamic> json) => _$CityFromJson(json);
+  factory City.fromJson(Map<String, dynamic> json) {
+    List<AirplaneCompany> airplaneCompaniesList =
+        (json['airplaneCompanies'] as List)
+            .map((companyJson) => AirplaneCompany.fromJson(companyJson))
+            .toList();
 
-  Map<String, dynamic> toJson() => _$CityToJson(this);
+    List<Hotel> hotelsList = (json['hotels'] as List)
+        .map((hotelJson) => Hotel.fromJson(hotelJson))
+        .toList();
+
+    List<Restaurant> restaurantsList = (json['restaurants'] as List)
+        .map((restaurantJson) => Restaurant.fromJson(restaurantJson))
+        .toList();
+
+    return City(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      description: json['description'],
+      airplaneCompanies: airplaneCompaniesList,
+      hotels: hotelsList,
+      restaurants: restaurantsList,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    List<Map<String, dynamic>> airplaneCompaniesJson =
+        airplaneCompanies.map((company) => company.toJson()).toList();
+
+    List<Map<String, dynamic>> hotelsJson =
+        hotels.map((hotel) => hotel.toJson()).toList();
+
+    List<Map<String, dynamic>> restaurantsJson =
+        restaurants.map((restaurant) => restaurant.toJson()).toList();
+
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+      'description': description,
+      'airplaneCompanies': airplaneCompaniesJson,
+      'hotels': hotelsJson,
+      'restaurants': restaurantsJson,
+    };
+  }
 }
