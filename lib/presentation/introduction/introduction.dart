@@ -23,6 +23,12 @@ class _IntroductionState extends State<Introduction> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
