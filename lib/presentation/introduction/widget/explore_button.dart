@@ -25,9 +25,10 @@ class ExploreButton extends StatelessWidget {
             ),
           ),
         ),
-        icon: const Icon(
+        icon: Icon(
           Icons.search_rounded,
           size: 25,
+          color: AppTheme.appColor,
         ),
       ),
     );
