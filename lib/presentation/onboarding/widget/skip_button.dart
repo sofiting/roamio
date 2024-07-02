@@ -20,7 +20,7 @@ class SkipButton extends StatelessWidget {
             color: AppTheme.appColor,
           ),
         ),
-        onPressed: () => context.go('/home_screen'),
+        onPressed: () => context.go('/signup'),
       ),
     );
   }

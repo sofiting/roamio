@@ -82,10 +82,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     Center(child: Text('Error: $error')),
                 data: (cities) {
                   return ListView.builder(
-                    shrinkWrap:
-                        true,
-                    physics:
-                        const NeverScrollableScrollPhysics(), 
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: cities.length,
                     itemBuilder: (context, index) {
                       final city = cities[index];

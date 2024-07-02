@@ -12,7 +12,7 @@ class ExploreButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton.icon(
         onPressed: () {
-          context.go('/home_screen');
+          context.go('/login');
         },
         label: Padding(
           padding: const EdgeInsets.all(8.0),
