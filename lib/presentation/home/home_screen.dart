@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:roamio/config/const/app_const.dart';
 import 'package:roamio/config/const/home_const.dart';
+import 'package:roamio/presentation/home/viewmodel/city_viewmodel.dart';
 import 'package:roamio/presentation/home/widget/custom_appbar.dart';
 import 'package:roamio/responsive/font_size_scaler.dart';
 import 'package:roamio/responsive/hight_width_scaler.dart';
 import 'package:video_player/video_player.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
   static String name = "home_screen";
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   late VideoPlayerController _controller;
 
   @override
@@ -41,8 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     HightWidthScaler scaler = HightWidthScaler();
     scaler.init(context);
+
     double scaledFontSize(double baseFontSize) =>
         FontSizeScaler.calculateFontSize(context, baseFontSize);
+
+    final asyncValue = ref.watch(cityViewModelProvider);
+
     return Scaffold(
       appBar: CustomAppBar(
         baseFontSize: 15,
@@ -64,15 +70,38 @@ class _HomeScreenState extends State<HomeScreen> {
               else
                 const CircularProgressIndicator(),
               const SizedBox(height: 20),
-              Column(
-                children: [
-                  Text(
-                    discover,
-                    style: TextStyle(
-                      fontSize: scaledFontSize(16),
-                    ),
-                  ),
-                ],
+              Text(
+                discover,
+                style: TextStyle(
+                  fontSize: scaledFontSize(16),
+                ),
+              ),
+              asyncValue.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stackTrace) =>
+                    Center(child: Text('Error: $error')),
+                data: (cities) {
+                  return ListView.builder(
+                    shrinkWrap:
+                        true,
+                    physics:
+                        const NeverScrollableScrollPhysics(), 
+                    itemCount: cities.length,
+                    itemBuilder: (context, index) {
+                      final city = cities[index];
+                      return ListTile(
+                        leading: Image.network(
+                          city.image,
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(city.name),
+                        subtitle: Text(city.description),
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
